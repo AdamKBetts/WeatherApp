@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+h﻿using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ namespace WeatherApp.Controllers
 {
     public class WeatherController : Controller
     {
-        private readonly string _apiKey = "abb93bac8d0c471480e114449253101";
+        private readonly string _apiKey = "WeatherAPIKey";
         private readonly string _currentWeatherUrl = "http://api.weatherapi.com/v1/current.json?key={0}&q={1}&aqi=no";
         private readonly string _forecastUrl = "http://api.weatherapi.com/v1/forecast.json?key={0}&q={1}&days=3&aqi=no&alerts=no";
 
