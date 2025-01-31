@@ -1,0 +1,63 @@
+﻿@model WeatherApp.Models.Weather
+
+<h2>Weather in @(Model?.location?.name ?? "Unknown")</h2>
+
+@if (ViewBag.Error != null)
+{
+    <p class="error">@ViewBag.Error</p>
+}
+else if (Model != null)
+{
+    <p>Condition: @Model.current.condition.text</p>
+    <p>Temperature: @Model.current.temp_c °C (@Model.current.temp_f °F)</p>
+    <p>Wind: @Model.current.wind_kph kph(@Model.current.wind_mph mph) @Model.current.wind_dir</p>
+    <p>Humidity: @Model.current.humidity%</p>
+    <p>Feels Like: @Model.current.feelslike_c °C (@Model.current.feelslike_f °F)</p>
+    <img src="@Model.current.condition.icon" alt="WeatherIcon" />
+
+    @if (Model.forecast != null) 
+    {
+        <h3>3-Day Forecast</h3>
+        @foreach (var day in Model.forecast.forecastday)
+        {
+            <div class="forecast-day"> @*Added a div for styling*@
+                <p>@day.date</p>
+                <p>Max: @day.day.maxtemp_c °C</p>
+                <p>Min: @day.day.mintemp_c °C</p>
+                <p>Avg: @day.day.avgtemp_c °C</p>
+                <img src="@day.day.condition.icon" alt="Forecast Icon" />
+            </div>
+        }
+    }
+    else if (ViewBag.ForecastError != null)
+    {
+        <p class="error">@ViewBag.ForecastError</p>
+    }
+}
+
+@using (Html.BeginForm("Index", "Weather", FormMethod.Get)) 
+{
+    <label for="city">City:</label>
+    <input type="text" name="city" id="city" />
+    <button type="submit">Search</button>
+}
+
+<style>
+    .forecast-day {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+    }
+
+    .forecast-day img {
+        max-width: 50px;
+        height: auto;
+    }
+
+    .error {
+        color: red;
+    }
+</style>
